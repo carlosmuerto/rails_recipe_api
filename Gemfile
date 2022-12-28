@@ -6,6 +6,9 @@ ruby '3.1.2'
 # API Documentaion
 gem 'rswag'
 
+# handle json reponse
+gem 'fast_jsonapi'
+
 # handle Authorization
 gem 'cancancan'
 
