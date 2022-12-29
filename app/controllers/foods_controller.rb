@@ -1,5 +1,5 @@
 class FoodsController < ApplicationController
-  before_action :set_food, only: %i[ show update destroy ]
+  before_action :set_food, only: %i[show update destroy]
 
   # GET /foods
   def index
@@ -39,13 +39,14 @@ class FoodsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_food
-      @food = Food.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def food_params
-      params.require(:food).permit(:name, :unit, :price_per_unit)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_food
+    @food = Food.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def food_params
+    params.require(:food).permit(:name, :unit, :price_per_unit)
+  end
 end
