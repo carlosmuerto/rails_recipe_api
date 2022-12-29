@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  resources :user_foods
+  resources :recipe_foods
+  resources :recipes
+  resources :foods
   resources :users
 
   devise_for :users, path: '', path_names: {

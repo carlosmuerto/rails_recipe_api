@@ -7,5 +7,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable,
          :jwt_authenticatable, jwt_revocation_strategy: self
 
+  has_many :user_food
+  has_many :foods, through: :user_food, source: :food
+
   validates :name, presence: true
 end
