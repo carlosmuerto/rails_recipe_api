@@ -7,5 +7,5 @@ class Food < ApplicationRecord
 
   validates :name, presence: true
   validates :unit, presence: true, inclusion: { in: %w[g Kg lts ml piece] }
-  validates :price, presence: true, numericality: { greater_than: 0 }
+  validates :price_per_unit, presence: true, numericality: { greater_than: 0 }
 end
