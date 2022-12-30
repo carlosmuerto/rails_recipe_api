@@ -1,9 +1,10 @@
 Rails.application.routes.draw do
-  resources :user_foods
-  resources :recipe_foods
-  resources :recipes
-  resources :foods
-  resources :users
+  resources :user_foods, only: [:index, :create, :destroy]
+  resources :recipe_foods, only: [:index, :create, :destroy]
+  resources :recipes, only: [:index, :show, :new, :create, :destroy] do
+    get 'publics', on: :collection
+  end
+  resources :foods, only: [:index, :show, :new, :create, :destroy]
 
   devise_for :users, path: '', path_names: {
     sign_in: 'login',
