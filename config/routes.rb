@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   resources :user_foods, only: [:index, :create, :destroy]
-  resources :recipe_food, only: [:index, :create, :destroy]
+  resources :recipe_foods, only: [:index, :create, :destroy]
   resources :recipes, only: [:index, :show, :new, :create, :destroy] do
     get 'publics', on: :collection
   end
@@ -25,11 +25,3 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root "current_user#index"
 end
-
-
-
-
-
-  
-
-  
