@@ -1,5 +1,6 @@
 class RecipesController < ApplicationController
-  before_action :set_recipe, only: %i[show update destroy]
+  before_action :authenticate_user!
+  before_action :set_recipe, only: %i[show destroy]
 
   # GET /recipes
   def index
@@ -19,15 +20,6 @@ class RecipesController < ApplicationController
 
     if @recipe.save
       render json: @recipe, status: :created, location: @recipe
-    else
-      render json: @recipe.errors, status: :unprocessable_entity
-    end
-  end
-
-  # PATCH/PUT /recipes/1
-  def update
-    if @recipe.update(recipe_params)
-      render json: @recipe
     else
       render json: @recipe.errors, status: :unprocessable_entity
     end

@@ -1,5 +1,6 @@
 class FoodsController < ApplicationController
-  before_action :set_food, only: %i[show update destroy]
+  before_action :authenticate_user!
+  before_action :set_food, only: %i[show destroy]
 
   # GET /foods
   def index
@@ -19,15 +20,6 @@ class FoodsController < ApplicationController
 
     if @food.save
       render json: @food, status: :created, location: @food
-    else
-      render json: @food.errors, status: :unprocessable_entity
-    end
-  end
-
-  # PATCH/PUT /foods/1
-  def update
-    if @food.update(food_params)
-      render json: @food
     else
       render json: @food.errors, status: :unprocessable_entity
     end
