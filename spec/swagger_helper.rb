@@ -16,20 +16,41 @@ RSpec.configure do |config|
     'v1/swagger.yaml' => {
       openapi: '3.0.1',
       info: {
-        title: 'API V1',
-        version: 'v1'
+        title: 'RECIPE API'
       },
-      paths: {},
-      servers: [
-        {
-          url: 'https://{defaultHost}',
-          variables: {
-            defaultHost: {
-              default: 'www.example.com'
+      components: {
+        securitySchemes: {
+          bearer_auth: {
+            type: :http,
+            scheme: :bearer
+          }
+        },
+        schemas: {
+          User: {
+            type: :object,
+            properties: {
+              id: { type: :integer, example: 2 },
+              name: { type: :string, example: 'Scott Wells' },
+              email: { type: :string, example: 'scott_wells@test.com' },
+              role: { type: :string, example: 'user' }
+            }
+          },
+          status: {
+            type: :object,
+            properties: {
+              code: { type: :integer, example: 200 },
+              message: { type: :string, example: 'Signed up sucessfully.' }
+            }
+          },
+          ErrorResponses: {
+            type: :object,
+            properties: {
+              type: :array,
+              items: { type: :string, example: 'error message.' }
             }
           }
         }
-      ]
+      }
     }
   }
 
