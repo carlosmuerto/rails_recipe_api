@@ -11,9 +11,9 @@ RSpec.describe 'food', type: :request do
   end
   let(:valid_attributes) do
     Food.create(
-      name: "Test Food",
-      unit: "Kg",
-      price_per_unit: 0.5,
+      name: 'Test Food',
+      unit: 'Kg',
+      price_per_unit: 0.5
     )
   end
 
@@ -38,7 +38,6 @@ RSpec.describe 'food', type: :request do
 
         run_test!
       end
-
     end
 
     post 'Create a food' do
@@ -52,7 +51,7 @@ RSpec.describe 'food', type: :request do
         properties: {
           name: { type: :string, example: 'Tomatoes' },
           unit: { type: :string, example: 'g' },
-          price_per_unit: { type: :number, example: 0.01 },
+          price_per_unit: { type: :number, example: 0.01 }
         },
         required: %w[
           name
@@ -67,9 +66,9 @@ RSpec.describe 'food', type: :request do
         let(:Food) do
           {
             food: {
-              name: "Tomatoes",
-              unit: "Kg",
-              price_per_unit: 1.5,
+              name: 'Tomatoes',
+              unit: 'Kg',
+              price_per_unit: 1.5
             }
           }
         end
@@ -85,9 +84,9 @@ RSpec.describe 'food', type: :request do
         let(:Food) do
           {
             food: {
-              name: "Tomatoes",
-              unit: "Kg",
-              price_per_unit: -1.5,
+              name: 'Tomatoes',
+              unit: 'Kg',
+              price_per_unit: -1.5
             }
           }
         end
@@ -105,9 +104,9 @@ RSpec.describe 'food', type: :request do
         let(:Food) do
           {
             food: {
-              name: "Tomatoes",
-              unit: "Kg",
-              price_per_unit: 1.5,
+              name: 'Tomatoes',
+              unit: 'Kg',
+              price_per_unit: 1.5
             }
           }
         end
