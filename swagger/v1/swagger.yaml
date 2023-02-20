@@ -8,6 +8,27 @@ components:
       type: http
       scheme: bearer
   schemas:
+    Food:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 2
+        name:
+          type: string
+          example: Tomatoes
+        unit:
+          type: string
+          example: g
+        price_per_unit:
+          type: string
+          example: '0.01'
+        created_at:
+          type: string
+          example: '2023-02-20T18:54:28.608Z'
+        updated_at:
+          type: string
+          example: '2023-02-20T18:54:28.608Z'
     User:
       type: object
       properties:
@@ -40,6 +61,57 @@ components:
           type: string
           example: error message.
 paths:
+  "/foods":
+    get:
+      summary: Get foods List
+      security:
+      - bearer_auth: []
+      responses:
+        '401':
+          description: Unauthorized
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/Food"
+    post:
+      summary: Create a food
+      security:
+      - bearer_auth: []
+      parameters: []
+      responses:
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/Food"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Tomatoes
+                unit:
+                  type: string
+                  example: g
+                price_per_unit:
+                  type: number
+                  example: 0.01
+              required:
+              - name
+              - unit
+              - price_per_unit
   "/signup":
     post:
       summary: signup
