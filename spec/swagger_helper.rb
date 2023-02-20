@@ -28,6 +28,17 @@ RSpec.configure do |config|
           }
         },
         schemas: {
+          Food: {
+            type: :object,
+            properties: {
+              id: { type: :integer, example: 2 },
+              name: { type: :string, example: 'Tomatoes' },
+              unit: { type: :string, example: 'g' },
+              price_per_unit: { type: :string, example: '0.01' },
+              created_at: { type: :string, example: '2023-02-20T18:54:28.608Z' },
+              updated_at: { type: :string, example: '2023-02-20T18:54:28.608Z' }
+            }
+          },
           User: {
             type: :object,
             properties: {
