@@ -1,4 +1,3 @@
-# rubocop:disable Metrics/BlockLength
 require 'swagger_helper'
 
 RSpec.describe 'current_user', type: :request do
@@ -34,5 +33,3 @@ RSpec.describe 'current_user', type: :request do
     end
   end
 end
-
-# rubocop:enable Metrics/BlockLength
