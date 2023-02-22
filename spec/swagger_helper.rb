@@ -45,7 +45,7 @@ RSpec.configure do |config|
               id: { type: :integer, example: 2 },
               name: { type: :string, example: 'Scott Wells' },
               email: { type: :string, example: 'scott_wells@test.com' },
-              role: { type: :string, example: 'user' }
+              created_at: { type: :string, example: '2023-02-22T02:16:55.863Z' }
             }
           },
           status: {
