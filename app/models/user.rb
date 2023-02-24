@@ -10,5 +10,16 @@ class User < ApplicationRecord
   has_many :user_food
   has_many :foods, through: :user_food, source: :food
 
+  def self.roles
+    %w[user admin].freeze
+  end
+
+  User.roles.each do |role_name|
+    define_method "#{role_name}?" do
+      role == role_name
+    end
+  end
+
   validates :name, presence: true
+  validates :role, inclusion: { in: User.roles }
 end
