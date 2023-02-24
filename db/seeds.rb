@@ -35,5 +35,13 @@
 #       }
 #     ]
 #   )
+
+# CREATE ADMIN USER
+User.create(
+    name: Rails.application.credentials.admin_user_name.presence || 'admin',
+    email: Rails.application.credentials.admin_user_email.presence || 'admin@admin.com',
+    password: Rails.application.credentials.admin_user_pass.presence || 'adminpass',
+    role: User.roles[1]
+)
   
 #   puts "#{users.count} users created"
