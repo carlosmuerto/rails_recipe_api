@@ -12,6 +12,7 @@ class UserFoodsController < ApplicationController
   # POST /user_foods
   def create
     @user_food = UserFood.new(user_food_params)
+    @user_food.user = current_user
 
     if @user_food.save
       render json: @user_food, status: :created, location: @user_food
@@ -34,6 +35,6 @@ class UserFoodsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def user_food_params
-    params.require(:user_food).permit(:quantity, :user_id, :food_id)
+    params.require(:user_food).permit(:quantity, :food_id)
   end
 end
