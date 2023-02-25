@@ -1,17 +1,19 @@
 class FoodsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_food, only: %i[show destroy]
+  load_and_authorize_resource
 
   # GET /foods
   def index
-    @foods = Food.all
+    # @foods = Food.all
 
-    render json: @foods
+    render json: @foods.map { |item|
+      FoodSerializer.new(item).serializable_hash[:data][:attributes]
+    }, status: :ok
   end
 
   # GET /foods/1
   def show
-    render json: @food
+    render json: FoodSerializer.new(@food).serializable_hash[:data][:attributes], status: :ok
   end
 
   # POST /foods
@@ -19,7 +21,7 @@ class FoodsController < ApplicationController
     @food = Food.new(food_params)
 
     if @food.save
-      render json: @food, status: :created, location: @food
+      render json: FoodSerializer.new(@food).serializable_hash[:data][:attributes], status: :created
     else
       render json: @food.errors, status: :unprocessable_entity
     end
@@ -28,14 +30,10 @@ class FoodsController < ApplicationController
   # DELETE /foods/1
   def destroy
     @food.destroy
+    render json: { message: 'food deleted!' }, status: :no_content
   end
 
   private
-
-  # Use callbacks to share common setup or constraints between actions.
-  def set_food
-    @food = Food.find(params[:id])
-  end
 
   # Only allow a list of trusted parameters through.
   def food_params

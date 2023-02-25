@@ -9,6 +9,14 @@ RSpec.describe 'food', type: :request do
       password: '123rspec123'
     )
   end
+  let!(:test_admin) do
+    User.create(
+      name: 'test_admin',
+      email: 'test_admin@admin.com',
+      password: 'test_adminpass',
+      role: User.roles[1]
+    )
+  end
 
   let!(:test_food) do
     Food.create(
@@ -84,9 +92,27 @@ RSpec.describe 'food', type: :request do
         run_test!
       end
 
-      response 422, 'Unprocessable Entity' do
+      response 403, 'You are not authorized to access this page.' do
         let(:Authorization) do
           Devise::JWT::TestHelpers.auth_headers({}, test_person)['Authorization']
+        end
+
+        let(:Food) do
+          {
+            food: {
+              name: 'Tomatoes',
+              unit: 'Kg',
+              price_per_unit: 1.5
+            }
+          }
+        end
+
+        run_test!
+      end
+
+      response 422, 'Unprocessable Entity' do
+        let(:Authorization) do
+          Devise::JWT::TestHelpers.auth_headers({}, test_admin)['Authorization']
         end
 
         let(:Food) do
@@ -106,7 +132,7 @@ RSpec.describe 'food', type: :request do
         schema '$ref' => '#/components/schemas/Food'
 
         let(:Authorization) do
-          Devise::JWT::TestHelpers.auth_headers({}, test_person)['Authorization']
+          Devise::JWT::TestHelpers.auth_headers({}, test_admin)['Authorization']
         end
 
         let(:Food) do
