@@ -146,6 +146,37 @@ paths:
                 type: array
                 items:
                   "$ref": "#/components/schemas/UserFood"
+    post:
+      summary: Create a User food
+      security:
+      - bearer_auth: []
+      parameters: []
+      responses:
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/UserFood"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                food_id:
+                  type: integer
+                  example: 2
+                quantity:
+                  type: number
+                  example: 0.01
+              required:
+              - food_id
+              - quantity
   "/signup":
     post:
       summary: signup
