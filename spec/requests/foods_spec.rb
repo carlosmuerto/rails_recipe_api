@@ -9,11 +9,19 @@ RSpec.describe 'food', type: :request do
       password: '123rspec123'
     )
   end
-  let(:valid_attributes) do
+
+  let!(:test_food) do
     Food.create(
       name: 'Test Food',
       unit: 'Kg',
       price_per_unit: 0.5
+    )
+  end
+  let(:test_UserFood) do
+    UserFood.create(
+      user: test_person,
+      food: test_food,
+      quantity: 5.1
     )
   end
 
