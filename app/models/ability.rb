@@ -1,10 +1,7 @@
 class Ability
   include CanCan::Ability
 
-  
-
   def initialize(user)
-
     can(%i[read], Food)
     can(%i[read], Recipe, public: true)
 

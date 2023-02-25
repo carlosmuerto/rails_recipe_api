@@ -13,7 +13,7 @@ RSpec.describe UserFood, type: :model do
       price_per_unit: 0.5
     )
 
-    @userFood = UserFood.new(
+    @user_food = UserFood.new(
       user: @user,
       food: @food,
       quantity: 5.1
@@ -34,18 +34,18 @@ RSpec.describe UserFood, type: :model do
 
   describe 'validations' do
     it 'is not valid without a quantity' do
-      @userFood.quantity = nil
-      expect(@userFood).to_not be_valid
+      @user_food.quantity = nil
+      expect(@user_food).to_not be_valid
     end
 
     it 'is not valid with negative quantity' do
-      @userFood.quantity = -10.1
-      expect(@userFood).to_not be_valid
+      @user_food.quantity = -10.1
+      expect(@user_food).to_not be_valid
     end
 
     it 'is valid with 0 quantity' do
-      @userFood.quantity = 0
-      expect(@userFood).to be_valid
+      @user_food.quantity = 0
+      expect(@user_food).to be_valid
     end
   end
 end

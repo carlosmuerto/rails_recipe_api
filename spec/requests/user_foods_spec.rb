@@ -50,7 +50,7 @@ RSpec.describe 'UserFood', type: :request do
         type: :object,
         properties: {
           food_id: { type: :integer, example: 2 },
-          quantity: { type: :number, example: 0.01 },
+          quantity: { type: :number, example: 0.01 }
         },
         required: %w[
           food_id
@@ -102,7 +102,6 @@ RSpec.describe 'UserFood', type: :request do
 
         run_test!
       end
-
     end
   end
 end
