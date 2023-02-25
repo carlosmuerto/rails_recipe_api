@@ -30,7 +30,7 @@ RSpec.describe 'UserFood', type: :request do
       end
 
       response 200, 'OK' do
-        schema type: :array, items: { '$ref' => '#/components/schemas/Food' }
+        schema type: :array, items: { '$ref' => '#/components/schemas/UserFood' }
 
         let(:Authorization) do
           Devise::JWT::TestHelpers.auth_headers({}, test_person)['Authorization']
