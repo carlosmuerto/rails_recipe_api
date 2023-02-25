@@ -1,12 +1,14 @@
 class UserFoodsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_user_food, only: %i[show destroy]
+  load_and_authorize_resource
 
   # GET /user_foods
   def index
-    @user_foods = UserFood.all
+    # @user_foods = UserFood.all
 
-    render json: @user_foods
+    render json: @user_foods.map { |item|
+      UserFoodSerializer.new(item).serializable_hash[:data][:attributes]
+    }, status: :ok
   end
 
   # POST /user_foods
@@ -15,7 +17,7 @@ class UserFoodsController < ApplicationController
     @user_food.user = current_user
 
     if @user_food.save
-      render json: @user_food, status: :created, location: @user_food
+      render json: UserFoodSerializer.new(@user_food).serializable_hash[:data][:attributes], status: :created
     else
       render json: @user_food.errors, status: :unprocessable_entity
     end
@@ -24,14 +26,10 @@ class UserFoodsController < ApplicationController
   # DELETE /user_foods/1
   def destroy
     @user_food.destroy
+    render json: { message: 'user food deleted!' }, status: :no_content
   end
 
   private
-
-  # Use callbacks to share common setup or constraints between actions.
-  def set_user_food
-    @user_food = UserFood.find(params[:id])
-  end
 
   # Only allow a list of trusted parameters through.
   def user_food_params

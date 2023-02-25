@@ -34,9 +34,14 @@ RSpec.configure do |config|
               id: { type: :integer, example: 2 },
               name: { type: :string, example: 'Tomatoes' },
               unit: { type: :string, example: 'g' },
-              price_per_unit: { type: :string, example: '0.01' },
-              created_at: { type: :string, example: '2023-02-20T18:54:28.608Z' },
-              updated_at: { type: :string, example: '2023-02-20T18:54:28.608Z' }
+              price_per_unit: { type: :string, example: '0.01' }
+            }
+          },
+          UserFood: {
+            type: :object,
+            properties: {
+              food: { '$ref' => '#/components/schemas/Food' },
+              quantity: { type: :string, example: '0.01' }
             }
           },
           User: {

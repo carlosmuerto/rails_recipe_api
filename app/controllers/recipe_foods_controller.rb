@@ -1,12 +1,14 @@
 class RecipeFoodsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_recipe_food, only: %i[show destroy]
+  load_and_authorize_resource
 
   # GET /recipe_foods
   def index
-    @recipe_foods = RecipeFood.all
+    # @recipe_foods = RecipeFood.all
 
-    render json: @recipe_foods
+    render json: @recipe_foods.map { |item|
+      AppointmentSerializer.new(item).serializable_hash[:data][:attributes]
+    }, status: :ok
   end
 
   # POST /recipe_foods
@@ -23,14 +25,10 @@ class RecipeFoodsController < ApplicationController
   # DELETE /recipe_foods/1
   def destroy
     @recipe_food.destroy
+    render json: { message: 'recipe food deleted!' }, status: :no_content
   end
 
   private
-
-  # Use callbacks to share common setup or constraints between actions.
-  def set_recipe_food
-    @recipe_food = RecipeFood.find(params[:id])
-  end
 
   # Only allow a list of trusted parameters through.
   def recipe_food_params
