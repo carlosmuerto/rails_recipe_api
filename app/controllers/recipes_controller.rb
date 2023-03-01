@@ -1,6 +1,6 @@
 class RecipesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_recipe, only: %i[show destroy]
+  load_and_authorize_resource
 
   # GET /recipes
   def index
@@ -31,11 +31,6 @@ class RecipesController < ApplicationController
   end
 
   private
-
-  # Use callbacks to share common setup or constraints between actions.
-  def set_recipe
-    @recipe = Recipe.find(params[:id])
-  end
 
   # Only allow a list of trusted parameters through.
   def recipe_params
