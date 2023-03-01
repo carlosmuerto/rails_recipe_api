@@ -21,9 +21,9 @@ class RecipesController < ApplicationController
     @recipe = Recipe.new(recipe_params)
     @recipe.author = current_user
 
-    @recipe.recipe_food =  params.require(:recipe)
+    @recipe.recipe_food = params.require(:recipe)
       .except(:name, :preparation_time, :cooking_time, :description, :public)
-      .permit(foods: [:food_id, :quantity])[:foods].map do |recipe_food|
+      .permit(foods: %i[food_id quantity])[:foods].map do |recipe_food|
       RecipeFood.new(
         food: Food.find(recipe_food.require(:food_id)),
         quantity: recipe_food.require(:quantity)
@@ -34,10 +34,10 @@ class RecipesController < ApplicationController
       render json: RecipeSerializer.new(@recipe).serializable_hash[:data][:attributes], status: :created
     else
       render json: {
-        item: RecipeSerializer.new(@recipe).serializable_hash[:data][:attributes],
-        errors: @recipe.errors
-      },
-      status: :unprocessable_entity
+               item: RecipeSerializer.new(@recipe).serializable_hash[:data][:attributes],
+               errors: @recipe.errors
+             },
+             status: :unprocessable_entity
     end
   end
 
