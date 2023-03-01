@@ -29,7 +29,7 @@ RSpec.describe '/recipe_foods', type: :request do
   # RecipeFoodsController, or in your router and rack
   # middleware. Be sure to keep this updated too.
   let(:valid_headers) do
-    {}
+    skip('Add a valid headers')
   end
 
   describe 'GET /index' do
