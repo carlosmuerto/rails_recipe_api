@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/BlockLength
 require 'swagger_helper'
 
 RSpec.describe 'Recipe', type: :request do
@@ -70,13 +71,13 @@ RSpec.describe 'Recipe', type: :request do
             type: :object,
             properties: {
               name: { type: :string, example: 'Hoppscotchs' },
-              description: { type: :string, example: "really tasty food" },
+              description: { type: :string, example: 'really tasty food' },
               public: { type: :boolean, example: false },
               preparation_time: { type: :integer, example: 360 },
               cooking_time: { type: :integer, example: 360 },
               foods: {
                 type: :array,
-                items: { 
+                items: {
                   type: :object,
                   properties: {
                     food_id: { type: :integer, example: 1 },
@@ -86,7 +87,7 @@ RSpec.describe 'Recipe', type: :request do
                     food_id
                     quantity
                   ]
-                },
+                }
               }
             },
             required: %w[
@@ -109,8 +110,8 @@ RSpec.describe 'Recipe', type: :request do
         let(:recipe) do
           {
             recipe: {
-              name: "Hoppscotchs",
-              description: "really tasty food",
+              name: 'Hoppscotchs',
+              description: 'really tasty food',
               preparation_time: 360,
               cooking_time: 360,
               public: true,
@@ -137,8 +138,8 @@ RSpec.describe 'Recipe', type: :request do
         let(:recipe) do
           {
             recipe: {
-              name: "Hoppscotchs",
-              description: "really tasty food",
+              name: 'Hoppscotchs',
+              description: 'really tasty food',
               preparation_time: 360,
               cooking_time: 360,
               public: true,
@@ -160,8 +161,8 @@ RSpec.describe 'Recipe', type: :request do
         let(:recipe) do
           {
             recipe: {
-              name: "Hoppscotchs",
-              description: "really tasty food",
+              name: 'Hoppscotchs',
+              description: 'really tasty food',
               preparation_time: 360,
               cooking_time: 360,
               public: true,
@@ -222,7 +223,7 @@ RSpec.describe 'Recipe', type: :request do
       end
 
       response 200, 'OK' do
-        schema  '$ref' => '#/components/schemas/Recipe'
+        schema '$ref' => '#/components/schemas/Recipe'
 
         let(:id) { valid_recipe.id }
 
@@ -262,3 +263,5 @@ RSpec.describe 'Recipe', type: :request do
     end
   end
 end
+
+# rubocop:enable Metrics/BlockLength

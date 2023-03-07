@@ -134,7 +134,7 @@ RSpec.describe 'UserFood', type: :request do
       end
 
       response 200, 'OK' do
-        schema  '$ref' => '#/components/schemas/UserFood'
+        schema '$ref' => '#/components/schemas/UserFood'
 
         let(:id) { valid_user_food.id }
 

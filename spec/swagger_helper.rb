@@ -42,14 +42,14 @@ RSpec.configure do |config|
             properties: {
               id: { type: :integer, example: 2 },
               name: { type: :string, example: 'Hoppscotchs' },
-              description: { type: :string, example: "really tasty food" },
+              description: { type: :string, example: 'really tasty food' },
               public: { type: :boolean, example: false },
               preparation_time: { type: :integer, example: 360 },
               cooking_time: { type: :integer, example: 360 },
               author: { '$ref' => '#/components/schemas/User' },
               foods: {
                 type: :array,
-                items: { '$ref' => '#/components/schemas/UserFood' },
+                items: { '$ref' => '#/components/schemas/UserFood' }
               }
             }
           },
