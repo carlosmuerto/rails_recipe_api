@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
-  resources :user_foods, only: [:index, :create, :destroy]
-  resources :recipe_foods, only: [:index, :create, :destroy]
+  resources :user_foods, only: [:show, :index, :create, :destroy]
+  # resources :recipe_foods, only: [:index, :create, :destroy]
   resources :recipes, only: [:index, :show, :new, :create, :destroy] do
     get 'publics', on: :collection
   end

@@ -116,6 +116,35 @@ RSpec.describe 'UserFood', type: :request do
     end
 
     path '/user_foods/{id}' do
+      get 'get User Food info' do
+        consumes 'application/json'
+        produces 'application/json'
+
+        security [{ bearer_auth: [] }]
+
+        parameter name: :id, in: :path, type: :integer
+
+        response 401, 'Unauthorized' do
+          let(:Authorization) { '' }
+
+          let(:id) { valid_user_food.id }
+
+          run_test!
+        end
+
+        response 200, 'OK' do
+          schema  '$ref' => '#/components/schemas/UserFood'
+
+          let(:id) { valid_user_food.id }
+  
+          let(:Authorization) do
+            Devise::JWT::TestHelpers.auth_headers({}, test_person)['Authorization']
+          end
+  
+          run_test!
+        end
+      end
+
       delete 'delete a User food' do
         consumes 'application/json'
         produces 'application/json'

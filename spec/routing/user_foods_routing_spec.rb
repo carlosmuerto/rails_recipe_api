@@ -2,6 +2,9 @@ require 'rails_helper'
 
 RSpec.describe UserFoodsController, type: :routing do
   describe 'routing' do
+    it 'routes to #show' do
+      expect(get: '/user_foods/1').to route_to('user_foods#show', id: '1')
+    end
     it 'routes to #index' do
       expect(get: '/user_foods').to route_to('user_foods#index')
     end
