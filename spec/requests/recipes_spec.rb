@@ -17,5 +17,22 @@ RSpec.describe 'Recipe', type: :request do
     )
   end
 
-  pending "add some examples to (or delete) #{__FILE__}"
+  let!(:valid_recipe) do
+    @recipe = Recipe.create(
+      name: 'test_recipe',
+      preparation_time: 10.minutes.to_i,
+      cooking_time: 20.minutes.to_i,
+      description: 'test Description',
+      public: true,
+      author: valid_food,
+      recipe_food: [
+        RecipeFood.new(
+          food: @food,
+          quantity: 1
+        )
+      ]
+    )
+  end
+
+  
 end

@@ -2,6 +2,11 @@ class UserFoodsController < ApplicationController
   before_action :authenticate_user!
   load_and_authorize_resource
 
+  # GET /user_foods/1
+  def show
+    render json: UserFoodSerializer.new(@user_food).serializable_hash[:data][:attributes], status: :ok
+  end
+
   # GET /user_foods
   def index
     # @user_foods = UserFood.all
