@@ -114,62 +114,62 @@ RSpec.describe 'UserFood', type: :request do
         run_test!
       end
     end
+  end
 
-    path '/user_foods/{id}' do
-      get 'get User Food info' do
-        consumes 'application/json'
-        produces 'application/json'
+  path '/user_foods/{id}' do
+    get 'get User Food info' do
+      consumes 'application/json'
+      produces 'application/json'
 
-        security [{ bearer_auth: [] }]
+      security [{ bearer_auth: [] }]
 
-        parameter name: :id, in: :path, type: :integer
+      parameter name: :id, in: :path, type: :integer
 
-        response 401, 'Unauthorized' do
-          let(:Authorization) { '' }
+      response 401, 'Unauthorized' do
+        let(:Authorization) { '' }
 
-          let(:id) { valid_user_food.id }
+        let(:id) { valid_user_food.id }
 
-          run_test!
-        end
-
-        response 200, 'OK' do
-          schema  '$ref' => '#/components/schemas/UserFood'
-
-          let(:id) { valid_user_food.id }
-  
-          let(:Authorization) do
-            Devise::JWT::TestHelpers.auth_headers({}, test_person)['Authorization']
-          end
-  
-          run_test!
-        end
+        run_test!
       end
 
-      delete 'delete a User food' do
-        consumes 'application/json'
-        produces 'application/json'
+      response 200, 'OK' do
+        schema  '$ref' => '#/components/schemas/UserFood'
 
-        security [{ bearer_auth: [] }]
+        let(:id) { valid_user_food.id }
 
-        parameter name: :id, in: :path, type: :integer
-
-        response 401, 'Unauthorized' do
-          let(:Authorization) { '' }
-
-          let(:id) { valid_user_food.id }
-
-          run_test!
+        let(:Authorization) do
+          Devise::JWT::TestHelpers.auth_headers({}, test_person)['Authorization']
         end
 
-        response 204, 'No Content' do
-          let(:id) { valid_user_food.id }
+        run_test!
+      end
+    end
 
-          let(:Authorization) do
-            Devise::JWT::TestHelpers.auth_headers({}, test_person)['Authorization']
-          end
+    delete 'delete a User food' do
+      consumes 'application/json'
+      produces 'application/json'
 
-          run_test!
+      security [{ bearer_auth: [] }]
+
+      parameter name: :id, in: :path, type: :integer
+
+      response 401, 'Unauthorized' do
+        let(:Authorization) { '' }
+
+        let(:id) { valid_user_food.id }
+
+        run_test!
+      end
+
+      response 204, 'No Content' do
+        let(:id) { valid_user_food.id }
+
+        let(:Authorization) do
+          Devise::JWT::TestHelpers.auth_headers({}, test_person)['Authorization']
         end
+
+        run_test!
       end
     end
   end

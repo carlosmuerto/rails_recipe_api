@@ -179,4 +179,86 @@ RSpec.describe 'Recipe', type: :request do
       end
     end
   end
+
+  path '/recipes/publics' do
+    get 'Get publics Recipes List' do
+      consumes 'application/json'
+      produces 'application/json'
+
+      security [{ bearer_auth: [] }]
+
+      response 401, 'Unauthorized' do
+        let(:Authorization) { '' }
+        run_test!
+      end
+
+      response 200, 'OK' do
+        schema type: :array, items: { '$ref' => '#/components/schemas/Recipe' }
+
+        let(:Authorization) do
+          Devise::JWT::TestHelpers.auth_headers({}, test_person)['Authorization']
+        end
+
+        run_test!
+      end
+    end
+  end
+
+  path '/recipes/{id}' do
+    get 'get User Food info' do
+      consumes 'application/json'
+      produces 'application/json'
+
+      security [{ bearer_auth: [] }]
+
+      parameter name: :id, in: :path, type: :integer
+
+      response 401, 'Unauthorized' do
+        let(:Authorization) { '' }
+
+        let(:id) { valid_recipe.id }
+
+        run_test!
+      end
+
+      response 200, 'OK' do
+        schema  '$ref' => '#/components/schemas/Recipe'
+
+        let(:id) { valid_recipe.id }
+
+        let(:Authorization) do
+          Devise::JWT::TestHelpers.auth_headers({}, test_person)['Authorization']
+        end
+
+        run_test!
+      end
+    end
+
+    delete 'delete a User food' do
+      consumes 'application/json'
+      produces 'application/json'
+
+      security [{ bearer_auth: [] }]
+
+      parameter name: :id, in: :path, type: :integer
+
+      response 401, 'Unauthorized' do
+        let(:Authorization) { '' }
+
+        let(:id) { valid_recipe.id }
+
+        run_test!
+      end
+
+      response 204, 'No Content' do
+        let(:id) { valid_recipe.id }
+
+        let(:Authorization) do
+          Devise::JWT::TestHelpers.auth_headers({}, test_person)['Authorization']
+        end
+
+        run_test!
+      end
+    end
+  end
 end
