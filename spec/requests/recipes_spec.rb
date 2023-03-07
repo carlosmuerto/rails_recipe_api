@@ -24,15 +24,159 @@ RSpec.describe 'Recipe', type: :request do
       cooking_time: 20.minutes.to_i,
       description: 'test Description',
       public: true,
-      author: valid_food,
+      author: test_person,
       recipe_food: [
         RecipeFood.new(
-          food: @food,
+          food: valid_food,
           quantity: 1
         )
       ]
     )
   end
 
-  
+  path '/recipes' do
+    get 'Get User current Recipes List' do
+      consumes 'application/json'
+      produces 'application/json'
+
+      security [{ bearer_auth: [] }]
+
+      response 401, 'Unauthorized' do
+        let(:Authorization) { '' }
+        run_test!
+      end
+
+      response 200, 'OK' do
+        schema type: :array, items: { '$ref' => '#/components/schemas/Recipe' }
+
+        let(:Authorization) do
+          Devise::JWT::TestHelpers.auth_headers({}, test_person)['Authorization']
+        end
+
+        run_test!
+      end
+    end
+
+    post 'Create a Recipe' do
+      consumes 'application/json'
+      produces 'application/json'
+
+      security [{ bearer_auth: [] }]
+
+      parameter name: :recipe, in: :body, schema: {
+        type: :object,
+        properties: {
+          recipe: {
+            type: :object,
+            properties: {
+              name: { type: :string, example: 'Hoppscotchs' },
+              description: { type: :string, example: "really tasty food" },
+              public: { type: :boolean, example: false },
+              preparation_time: { type: :integer, example: 360 },
+              cooking_time: { type: :integer, example: 360 },
+              foods: {
+                type: :array,
+                items: { 
+                  type: :object,
+                  properties: {
+                    food_id: { type: :integer, example: 1 },
+                    quantity: { type: :numericality, example: 1.1 }
+                  },
+                  required: %w[
+                    food_id
+                    quantity
+                  ]
+                },
+              }
+            },
+            required: %w[
+              name
+              description
+              preparation_time
+              cooking_time
+              public
+            ]
+          }
+        },
+        required: %w[
+          recipe
+        ]
+      }
+
+      response 401, 'Unauthorized' do
+        let(:Authorization) { '' }
+
+        let(:recipe) do
+          {
+            recipe: {
+              name: "Hoppscotchs",
+              description: "really tasty food",
+              preparation_time: 360,
+              cooking_time: 360,
+              public: true,
+              foods: [
+                {
+                  food_id: valid_food.id,
+                  quantity: 1.1
+                }
+              ]
+            }
+          }
+        end
+
+        run_test!
+      end
+
+      response 422, 'Unprocessable Entity' do
+        schema '$ref' => '#/components/schemas/ErrorResponses'
+
+        let(:Authorization) do
+          Devise::JWT::TestHelpers.auth_headers({}, test_person)['Authorization']
+        end
+
+        let(:recipe) do
+          {
+            recipe: {
+              name: "Hoppscotchs",
+              description: "really tasty food",
+              preparation_time: 360,
+              cooking_time: 360,
+              public: true,
+              foods: []
+            }
+          }
+        end
+
+        run_test!
+      end
+
+      response 201, 'Created' do
+        schema '$ref' => '#/components/schemas/UserFood'
+
+        let(:Authorization) do
+          Devise::JWT::TestHelpers.auth_headers({}, test_person)['Authorization']
+        end
+
+        let(:recipe) do
+          {
+            recipe: {
+              name: "Hoppscotchs",
+              description: "really tasty food",
+              preparation_time: 360,
+              cooking_time: 360,
+              public: true,
+              foods: [
+                {
+                  food_id: valid_food.id,
+                  quantity: 1.1
+                }
+              ]
+            }
+          }
+        end
+
+        run_test!
+      end
+    end
+  end
 end

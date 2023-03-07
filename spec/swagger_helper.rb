@@ -37,6 +37,22 @@ RSpec.configure do |config|
               price_per_unit: { type: :string, example: '0.01' }
             }
           },
+          Recipe: {
+            type: :object,
+            properties: {
+              id: { type: :integer, example: 2 },
+              name: { type: :string, example: 'Hoppscotchs' },
+              description: { type: :string, example: "really tasty food" },
+              public: { type: :boolean, example: false },
+              preparation_time: { type: :integer, example: 360 },
+              cooking_time: { type: :integer, example: 360 },
+              author: { '$ref' => '#/components/schemas/User' },
+              foods: {
+                type: :array,
+                items: { '$ref' => '#/components/schemas/UserFood' },
+              }
+            }
+          },
           UserFood: {
             type: :object,
             properties: {

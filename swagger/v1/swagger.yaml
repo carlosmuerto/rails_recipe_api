@@ -23,6 +23,33 @@ components:
         price_per_unit:
           type: string
           example: '0.01'
+    Recipe:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 2
+        name:
+          type: string
+          example: Hoppscotchs
+        description:
+          type: string
+          example: really tasty food
+        public:
+          type: boolean
+          example: false
+        preparation_time:
+          type: integer
+          example: 360
+        cooking_time:
+          type: integer
+          example: 360
+        author:
+          "$ref": "#/components/schemas/User"
+        foods:
+          type: array
+          items:
+            "$ref": "#/components/schemas/UserFood"
     UserFood:
       type: object
       properties:
@@ -150,6 +177,88 @@ paths:
               - name
               - unit
               - price_per_unit
+  "/recipes":
+    get:
+      summary: Get User current Recipes List
+      security:
+      - bearer_auth: []
+      responses:
+        '401':
+          description: Unauthorized
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  "$ref": "#/components/schemas/Recipe"
+    post:
+      summary: Create a Recipe
+      security:
+      - bearer_auth: []
+      parameters: []
+      responses:
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorResponses"
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/UserFood"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                recipe:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      example: Hoppscotchs
+                    description:
+                      type: string
+                      example: really tasty food
+                    public:
+                      type: boolean
+                      example: false
+                    preparation_time:
+                      type: integer
+                      example: 360
+                    cooking_time:
+                      type: integer
+                      example: 360
+                    foods:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          food_id:
+                            type: integer
+                            example: 1
+                          quantity:
+                            type: numericality
+                            example: 1.1
+                        required:
+                        - food_id
+                        - quantity
+                  required:
+                  - name
+                  - description
+                  - preparation_time
+                  - cooking_time
+                  - public
+              required:
+              - recipe
   "/user_foods":
     get:
       summary: Get User foods List
@@ -202,6 +311,25 @@ paths:
               - food_id
               - quantity
   "/user_foods/{id}":
+    get:
+      summary: get User Food info
+      security:
+      - bearer_auth: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        '401':
+          description: Unauthorized
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/UserFood"
     delete:
       summary: delete a User food
       security:
