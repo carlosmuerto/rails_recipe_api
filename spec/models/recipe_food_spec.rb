@@ -20,7 +20,7 @@ RSpec.describe RecipeFood, type: :model do
       cooking_time: 20.minutes.to_i,
       description: 'test Description',
       public: true,
-      author: @user,
+      author: @user
     )
 
     @recipe_food = RecipeFood.new(

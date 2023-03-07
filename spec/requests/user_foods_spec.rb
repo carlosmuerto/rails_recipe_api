@@ -81,6 +81,8 @@ RSpec.describe 'UserFood', type: :request do
       end
 
       response 422, 'Unprocessable Entity' do
+        schema '$ref' => '#/components/schemas/ErrorResponses'
+
         let(:Authorization) do
           Devise::JWT::TestHelpers.auth_headers({}, test_person)['Authorization']
         end

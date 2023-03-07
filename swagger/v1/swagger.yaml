@@ -58,10 +58,26 @@ components:
     ErrorResponses:
       type: object
       properties:
-        type: array
-        items:
-          type: string
-          example: error message.
+        name:
+          type: array
+          items:
+            type: string
+            example:
+            - can't be blank
+        unit:
+          type: array
+          items:
+            type: string
+            example:
+            - can't be blank
+            - is not included in the list
+        price_per_unit:
+          type: array
+          items:
+            type: string
+            example:
+            - can't be blank
+            - is not a number
 paths:
   "/current_user":
     get:
@@ -105,6 +121,10 @@ paths:
           description: You are not authorized to access this page.
         '422':
           description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorResponses"
         '201':
           description: Created
           content:
@@ -156,6 +176,10 @@ paths:
           description: Unauthorized
         '422':
           description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                "$ref": "#/components/schemas/ErrorResponses"
         '201':
           description: Created
           content:
@@ -254,6 +278,8 @@ paths:
                 properties:
                   status:
                     "$ref": "#/components/schemas/status"
+                  data:
+                    "$ref": "#/components/schemas/User"
         '401':
           description: Invalid Email or password.
           content:

@@ -63,14 +63,55 @@ RSpec.configure do |config|
           ErrorResponses: {
             type: :object,
             properties: {
-              type: :array,
-              items: { type: :string, example: 'error message.' }
+              name: {
+                type: :array,
+                items: {
+                  type: :string,
+                  example: [
+                    "can't be blank"
+                  ]
+                }
+              },
+              unit: {
+                type: :array,
+                items: {
+                  type: :string,
+                  example: [
+                    "can't be blank",
+                    'is not included in the list'
+                  ]
+                }
+              },
+              price_per_unit: {
+                type: :array,
+                items: {
+                  type: :string,
+                  example: [
+                    "can't be blank",
+                    'is not a number'
+                  ]
+                }
+              }
             }
           }
         }
       }
     }
   }
+
+  # {
+  #   "name": [
+  #     "can't be blank"
+  #   ],
+  #   "unit": [
+  #     "can't be blank",
+  #     "is not included in the list"
+  #   ],
+  #   "price_per_unit": [
+  #     "can't be blank",
+  #     "is not a number"
+  #   ]
+  # }
 
   # Specify the format of the output Swagger file when running 'rswag:specs:swaggerize'.
   # The swagger_docs configuration option has the filename including format in

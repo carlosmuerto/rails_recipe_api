@@ -115,6 +115,8 @@ RSpec.describe 'food', type: :request do
           Devise::JWT::TestHelpers.auth_headers({}, test_admin)['Authorization']
         end
 
+        schema '$ref' => '#/components/schemas/ErrorResponses'
+
         let(:Food) do
           {
             food: {

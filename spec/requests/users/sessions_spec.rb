@@ -43,7 +43,8 @@ RSpec.describe 'Blogs API', type: :request do
                  description: 'bearer token'
 
           schema type: :object, properties: {
-            status: { '$ref' => '#/components/schemas/status' }
+            status: { '$ref' => '#/components/schemas/status' },
+            data: { '$ref' => '#/components/schemas/User' }
           }
 
           let(:cretentials) do
