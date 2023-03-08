@@ -1,6 +1,6 @@
 class RecipeSerializer
   include FastJsonapi::ObjectSerializer
-  attributes :name, :description, :public, :preparation_time, :cooking_time
+  attributes :id, :name, :description, :public, :preparation_time, :cooking_time
   attribute :author do |recipe|
     UserSerializer.new(recipe.author).serializable_hash[:data][:attributes]
   end

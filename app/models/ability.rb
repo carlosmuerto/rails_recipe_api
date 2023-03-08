@@ -3,7 +3,7 @@ class Ability
 
   def initialize(user)
     can(%i[read], Food)
-    can(%i[read], Recipe, public: true)
+    can(%i[publics], Recipe, public: true)
 
     return unless user.present?
 

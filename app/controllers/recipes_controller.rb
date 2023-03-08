@@ -6,7 +6,15 @@ class RecipesController < ApplicationController
   def index
     # @recipes = Food.all
 
-    render json: @recipes.map { |item|
+    render json: @recipes.where(author: current_user).map { |item|
+      RecipeSerializer.new(item).serializable_hash[:data][:attributes]
+    }, status: :ok
+  end
+
+  # GET /publics
+  def publics
+    @recipes = Recipe.all
+    render json: @recipes.where(public: true).map { |item|
       RecipeSerializer.new(item).serializable_hash[:data][:attributes]
     }, status: :ok
   end

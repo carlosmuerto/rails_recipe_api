@@ -37,6 +37,22 @@ RSpec.configure do |config|
               price_per_unit: { type: :string, example: '0.01' }
             }
           },
+          Recipe: {
+            type: :object,
+            properties: {
+              id: { type: :integer, example: 2 },
+              name: { type: :string, example: 'Hoppscotchs' },
+              description: { type: :string, example: 'really tasty food' },
+              public: { type: :boolean, example: false },
+              preparation_time: { type: :integer, example: 360 },
+              cooking_time: { type: :integer, example: 360 },
+              author: { '$ref' => '#/components/schemas/User' },
+              foods: {
+                type: :array,
+                items: { '$ref' => '#/components/schemas/UserFood' }
+              }
+            }
+          },
           UserFood: {
             type: :object,
             properties: {
@@ -63,14 +79,55 @@ RSpec.configure do |config|
           ErrorResponses: {
             type: :object,
             properties: {
-              type: :array,
-              items: { type: :string, example: 'error message.' }
+              name: {
+                type: :array,
+                items: {
+                  type: :string,
+                  example: [
+                    "can't be blank"
+                  ]
+                }
+              },
+              unit: {
+                type: :array,
+                items: {
+                  type: :string,
+                  example: [
+                    "can't be blank",
+                    'is not included in the list'
+                  ]
+                }
+              },
+              price_per_unit: {
+                type: :array,
+                items: {
+                  type: :string,
+                  example: [
+                    "can't be blank",
+                    'is not a number'
+                  ]
+                }
+              }
             }
           }
         }
       }
     }
   }
+
+  # {
+  #   "name": [
+  #     "can't be blank"
+  #   ],
+  #   "unit": [
+  #     "can't be blank",
+  #     "is not included in the list"
+  #   ],
+  #   "price_per_unit": [
+  #     "can't be blank",
+  #     "is not a number"
+  #   ]
+  # }
 
   # Specify the format of the output Swagger file when running 'rswag:specs:swaggerize'.
   # The swagger_docs configuration option has the filename including format in

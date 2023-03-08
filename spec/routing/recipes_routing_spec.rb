@@ -17,5 +17,9 @@ RSpec.describe RecipesController, type: :routing do
     it 'routes to #destroy' do
       expect(delete: '/recipes/1').to route_to('recipes#destroy', id: '1')
     end
+
+    it 'routes to #public' do
+      expect(get: '/recipes/publics').to route_to('recipes#publics')
+    end
   end
 end
