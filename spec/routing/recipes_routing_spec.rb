@@ -19,7 +19,7 @@ RSpec.describe RecipesController, type: :routing do
     end
 
     it 'routes to #public' do
-      expect(post: '/publics').to route_to('foods#publics')
+      expect(post: '/publics').to route_to('recipes#publics')
     end
   end
 end
